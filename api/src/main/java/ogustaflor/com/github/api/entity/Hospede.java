@@ -1,4 +1,4 @@
-package ogustaflor.com.github.api.models;
+package ogustaflor.com.github.api.entity;
 
 import lombok.Getter;
 import lombok.Setter;
