@@ -6,31 +6,53 @@
 </header>
 
 <main id="landing-container">
-  <button>Incluir Pessoa</button>
+  <button (click)="handleOpenedAddHospede()">
+    {{ openedAddHospede ? 'Fechar Aba Novo Hóspede' : 'Abrir Aba Novo Hóspede' }}
+  </button>
 
-  <section>
-    <h3>Novo Check In</h3>
-    <form>
-      <div data-direction="column">
-        <label>Data/hora de Entrada</label>
-        <input type="datetime-local" name="dataEntrada" />
+  <section *ngIf="openedAddHospede" class="group-section">
+    <h3>Novo Hóspede</h3>
+    <form [formGroup]="newHospedeForm" (ngSubmit)="onSubmit($event)">
+      <div data-direction="column" data-expanded>
+        <label for="nome-input">Nome*</label>
+        <input name="nome" id="nome-input" formControlName="nome" />
       </div>
       <div data-direction="column">
-        <label>Data/hora de Saída</label>
-        <input type="datetime-local" name="dataEntrada" />
+        <label for="documento-input">Documento* <small>Único p/ Hóspede</small></label>
+        <input name="documento" id="documento-input" formControlName="documento" />
       </div>
       <div data-direction="column">
-        <label>Documento</label>
-        <input name="documento" />
+        <label for="telefone-input">Telefone*</label>
+        <input name="telefone" id="telefone-input" formControlName="telefone" />
       </div>
-      <div data-direction="row">
-        <input type="checkbox" name="adicionalVeiculo" />
-        <label>Possui Veículo?</label>
-      </div>
+      <button type="submit" [disabled]="!newHospedeForm.valid">Cadastrar</button>
     </form>
   </section>
 
-  <section>
+  <section class="group-section">
+    <h3>Novo Check In</h3>
+    <form>
+      <div data-direction="column">
+        <label for="dataEntrada-input">Data/hora de Entrada*</label>
+        <input type="datetime-local" name="dataEntrada" id="dataEntrada-input" />
+      </div>
+      <div data-direction="column">
+        <label for="dataSaida-input">Data/hora de Saída*</label>
+        <input type="datetime-local" name="dataSaida" id="dataSaida-input" />
+      </div>
+      <div data-direction="column">
+        <label for="documentoHospede-input">Documento do Hóspede*</label>
+        <input name="documentoHospede" id="documentoHospede-input" />
+      </div>
+      <div data-direction="row">
+        <input type="checkbox" name="adicionalVeiculo" id="adicionalVeiculo-input" />
+        <label for="adicionalVeiculo-input">Possui Veículo?</label>
+      </div>
+      <button type="submit">Cadastrar</button>
+    </form>
+  </section>
+
+  <section class="group-section">
     <h3>Consultas</h3>
   </section>
 </main>
