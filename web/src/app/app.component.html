@@ -12,7 +12,7 @@
 
   <section *ngIf="openedAddHospede" class="group-section">
     <h3>Novo Hóspede</h3>
-    <form [formGroup]="newHospedeForm" (ngSubmit)="onSubmit($event)">
+    <form [formGroup]="newHospedeForm" (ngSubmit)="handleSubmitNewHospede($event)">
       <div data-direction="column" data-expanded>
         <label for="nome-input">Nome*</label>
         <input name="nome" id="nome-input" formControlName="nome" />
@@ -31,24 +31,45 @@
 
   <section class="group-section">
     <h3>Novo Check In</h3>
-    <form>
+    <form [formGroup]="newCheckInForm" (ngSubmit)="handleSubmitNewCheckIn($event)">
       <div data-direction="column">
         <label for="dataEntrada-input">Data/hora de Entrada*</label>
-        <input type="datetime-local" name="dataEntrada" id="dataEntrada-input" />
+        <input 
+          type="datetime-local" 
+          name="dataEntrada" 
+          id="dataEntrada-input" 
+          step="1"
+          formControlName="dataEntrada" 
+        />
       </div>
       <div data-direction="column">
         <label for="dataSaida-input">Data/hora de Saída*</label>
-        <input type="datetime-local" name="dataSaida" id="dataSaida-input" />
+        <input 
+          type="datetime-local" 
+          name="dataSaida" 
+          id="dataSaida-input" 
+          step="1"
+          formControlName="dataSaida" 
+        />
       </div>
       <div data-direction="column">
         <label for="documentoHospede-input">Documento do Hóspede*</label>
-        <input name="documentoHospede" id="documentoHospede-input" />
+        <input 
+          name="documentoHospede" 
+          id="documentoHospede-input" 
+          formControlName="documentoHospede" 
+        />
       </div>
       <div data-direction="row">
-        <input type="checkbox" name="adicionalVeiculo" id="adicionalVeiculo-input" />
+        <input 
+          type="checkbox" 
+          name="adicionalVeiculo" 
+          id="adicionalVeiculo-input" 
+          formControlName="adicionalVeiculo" 
+        />
         <label for="adicionalVeiculo-input">Possui Veículo?</label>
       </div>
-      <button type="submit">Cadastrar</button>
+      <button type="submit" [disabled]="!newCheckInForm.valid">Realizar</button>
     </form>
   </section>
 

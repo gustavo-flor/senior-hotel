@@ -1,45 +1,46 @@
 import { Injectable } from '@angular/core';
 import { Hospede } from '../models/hospede';
 
+import api from './api.service';
+
 @Injectable()
 export class HospedeService {
 
-  sequence: number = 0;
-  hospedes: Hospede[] = [];
-
   constructor() { }
 
-  store(hospede: Hospede) {
-    if (!hospede.id) { 
-      hospede.id = ++this.sequence;
+  async store(hospede: Hospede) {
+    let response;
+    try {
+      response = await api.post('/v1/hospedes', hospede);
+    } catch (error) {
+      response = error.response;
     }
     
-    this.index().push(hospede);
-    return hospede;
+    const { data, status } = response;
+    
+    return [data, status];
   }
 
-  destroy(id: number) {
-    this.hospedes = this.index().filter(hospede => hospede.id !== id);
+  async destroy(id: number) {
+    await api.delete(`/v1/hospedes/${id}`);
   }
 
-  update(id: number, values: Object = {}) {
-    let hospede = this.show(id);
+  async update(id: number, values: Object = {}) {
+    const { data, status } = await api.patch(`/v1/hospedes/${id}`, values);
 
-    if (!hospede)
-      return null;
-  
-    Object.assign(hospede, values);
-    return hospede;
+    return [data, status];
   }
 
-  index() {
-    return this.hospedes;
+  async index() {
+    const { data, status } = await api.get('/v1/hospedes');
+
+    return [data, status];
   }
 
-  show(id: number) {
-    return this.index()
-      .filter(hospede => hospede.id === id)
-      .pop();
+  async show(id: number) {
+    const { data, status } = await api.get(`/v1/hospedes/${id}`);
+
+    return [data, status];
   }
 
 }
