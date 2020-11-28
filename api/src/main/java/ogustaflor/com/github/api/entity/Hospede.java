@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Hospede {
@@ -17,18 +18,21 @@ public class Hospede {
 	
 	@Column
 	@NotEmpty
+	@NotNull
 	@Getter
 	@Setter
 	private String nome;
 	
 	@Column(unique = true)
 	@NotEmpty
+	@NotNull
 	@Getter
 	@Setter
 	private String documento;
 	
 	@Column
 	@NotEmpty
+	@NotNull
 	@Getter
 	@Setter
 	private String telefone;

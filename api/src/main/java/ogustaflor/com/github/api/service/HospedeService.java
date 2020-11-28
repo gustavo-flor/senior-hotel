@@ -40,4 +40,8 @@ public class HospedeService {
 		hospedeRepository.save(hospede);
 	}
 	
+	public Optional<Hospede> findByDocumento(String documento) {
+		return hospedeRepository.findByDocumento(documento);
+	}
+	
 }

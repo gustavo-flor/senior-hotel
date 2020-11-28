@@ -1,6 +1,7 @@
-package ogustaflor.com.github.api.controller;
+package ogustaflor.com.github.api.controller.v1;
 
 import lombok.RequiredArgsConstructor;
+import ogustaflor.com.github.api.controller.v1.dtos.HospedeRequestBody;
 import ogustaflor.com.github.api.entity.Hospede;
 import ogustaflor.com.github.api.service.HospedeService;
 import org.springframework.data.domain.Page;
@@ -14,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/hospedes")
+@RequestMapping("/v1/hospedes")
 @RequiredArgsConstructor
 public class HospedeController {
 	
@@ -30,19 +31,20 @@ public class HospedeController {
 	}
 	
 	@PostMapping(produces = "application/json", consumes = "application/json")
-	public ResponseEntity<?> store(@Valid @RequestBody Hospede hospede) {
-		if (hospedeService.existsWithDocumento(hospede.getDocumento())) {
+	public ResponseEntity<?> store(@Valid @RequestBody HospedeRequestBody newHospede) {
+		if (hospedeService.existsWithDocumento(newHospede.getDocumento())) {
 			Map<String, Object> body = new HashMap<>();
 			body.put("message", "Documento já cadastrado.");
 			return new ResponseEntity<>(body, HttpStatus.CONFLICT);
 		}
 		
+		Hospede hospede = newHospede.toEntity();
 		hospedeService.add(hospede);
 		return new ResponseEntity<>(hospede, HttpStatus.CREATED);
 	}
 	
 	@GetMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<?> show(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<Hospede> show(@PathVariable(value = "id") Long id) {
 		Optional<Hospede> filteredHospede = hospedeService.findById(id);
 		if (filteredHospede.isPresent()) {
 			Hospede hospede = filteredHospede.get();
@@ -54,16 +56,23 @@ public class HospedeController {
 	}
 	
 	@PatchMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
-	public ResponseEntity<?> update(@RequestBody Hospede updatedHospede, @PathVariable(value = "id") Long id) {
+	public ResponseEntity<?> update(@RequestBody HospedeRequestBody updatedHospede, @PathVariable(value = "id") Long id) {
 		Optional<Hospede> filteredHospede = hospedeService.findById(id);
 		if (filteredHospede.isPresent()) {
 			Hospede hospede = filteredHospede.get();
+			
 			boolean hasChanged = false;
 			if (updatedHospede.getNome() != null && !hospede.getNome().equals(updatedHospede.getNome())) {
 				hospede.setNome(updatedHospede.getNome());
 				hasChanged = true;
 			}
 			if (updatedHospede.getDocumento() != null && !hospede.getDocumento().equals(updatedHospede.getDocumento())) {
+				if (hospedeService.existsWithDocumento(hospede.getDocumento())) {
+					Map<String, Object> body = new HashMap<>();
+					body.put("message", "Documento já cadastrado.");
+					return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+				}
+				
 				hospede.setDocumento(updatedHospede.getDocumento());
 				hasChanged = true;
 			}
