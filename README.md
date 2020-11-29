@@ -108,4 +108,82 @@ Responses:
 
 ---
 
+Endpoint: `POST /v1/hospedes/`
+
+Body:
+
+```txt
+{
+  "nome": "string", // [Obrigatório]
+  "documento": "string", // [Obrigatório / Único]
+  "telefone": "string" // [Obrigatório]
+}
+```
+
+Responses:
+
+- 201: Registro inserido com sucesso!;
+- 409: Conflito com regra de negócio:
+  - Documento informado já está cadastro por outro hóspede;
+
+---
+
+Endpoint: `GET /v1/hospedes/{hospedeId}`
+
+Parameters:
+
+```txt
+- id: Obrigatório e representa o identificador do registro no banco de dados, pode ser buscado via página index;
+```
+
+Responses:
+
+- 200: Busca realizada com sucesso, retornado modelo do Hóspede;
+- 404: Registro não encontrado;
+
+---
+
+Endpoint: `DELETE /v1/hospedes/{hospedeId}`
+
+Parameters:
+
+```txt
+- id: Obrigatório e representa o identificador do registro no banco de dados, pode ser buscado via página index;
+```
+
+Responses:
+
+- 200: Registro excluído com sucesso;
+
+// Não existe validação se registro existe ou não, portanto caso não exista vamos retornar 200 da mesma forma.
+
+---
+
+Endpoint: `PATCH /v1/hospedes/{hospedeId}`
+
+Parameters:
+
+```txt
+- id: Obrigatório e representa o identificador do registro no banco de dados, pode ser buscado via página index;
+```
+
+Body:
+
+```txt
+{
+  "nome": "string", // [Opcional]
+  "documento": "string", // [Opcional / Único]
+  "telefone": "string" // [Opcional]
+}
+```
+
+Responses:
+
+- 200: Registro atualizado com sucesso;
+- 409: Conflito com regra de negócio:
+  - Documento informado já está cadastro por outro hóspede;
+- 404: Registro não encontrado.
+
+---
+
 ## Muito Obrigado!
