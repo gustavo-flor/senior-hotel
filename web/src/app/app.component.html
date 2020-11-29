@@ -87,7 +87,7 @@
           Pessoas Que Já Deixaram o Hotel
         </label>
       </div>
-      <input type="text" [(ngModel)]="content" (keydown.enter)="onContentChange()" (change)="onContentChange()" placeholder="Conteúdo"/>
+      <input type="text" [(ngModel)]="content" (keydown)="handleKeydownContent()" placeholder="Conteúdo"/>
     </nav>
     <div>
       <table>

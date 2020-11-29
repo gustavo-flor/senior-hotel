@@ -116,13 +116,19 @@
         cursor: default
 
 @media (max-width: $breakpoint-tablet) 
-  .group-section > form
-    flex-direction: column
-    flex-wrap: nowrap
-    & > div
-      width: 100%
-    & > div[data-direction="row"]
-      margin-top: 32px
+  .group-section 
+    & > form
+      flex-direction: column
+      flex-wrap: nowrap
+      & > div
+        width: 100%
+      & > div[data-direction="row"]
+        margin-top: 32px
+    & > nav > div
+      display: flex
+      flex-direction: column
+      & > label + label
+        margin-left: 0
 
 
 @media (max-width: $breakpoint-mobile)

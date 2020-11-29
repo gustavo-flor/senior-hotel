@@ -5,6 +5,7 @@ import { Hospede } from './models/hospede';
 import { HospedeService } from './services/hospede.service';
 import { CheckInService } from './services/check-in.service';
 import { CheckIn } from './models/check-in';
+import debounce from './utils/debounce';
 
 @Component({
   selector: 'app-root',
@@ -60,8 +61,12 @@ export class AppComponent implements OnInit {
     this.loadHospedes();
   }
 
-  onContentChange() {
-    this.loadHospedes();
+  debounceLoadHospedes = debounce(async () => {
+    await this.loadHospedes();
+  }, 250);
+
+  handleKeydownContent() {
+    this.debounceLoadHospedes();
   }
 
   async handleSubmitNewHospede(event: Event) {
@@ -79,7 +84,6 @@ export class AppComponent implements OnInit {
         break;
       case 201:
         this.newHospedeForm.reset();
-        this.newHospedeForm.setValue({ dataEntrada: this.nowFormatted() })
         this.openedAddHospede = false;
         alert('Sucesso, hóspede cadastrado!');
         this.loadHospedes();
@@ -112,6 +116,9 @@ export class AppComponent implements OnInit {
         break;
       case 201:
         this.newCheckInForm.reset();
+        this.newCheckInForm.patchValue({ 
+          dataEntrada: this.nowFormatted()
+        })
         alert('Sucesso, check in realizado!');
         this.loadHospedes();
         break;
