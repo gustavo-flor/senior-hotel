@@ -75,5 +75,39 @@
 
   <section class="group-section">
     <h3>Consultas</h3>
+    <nav>
+      <span>Filtrar por:</span>
+      <div>
+        <label>
+          <input (change)="onSelectStatus('IN')" type="radio" name="status" [checked]="true">
+          Pessoas Ainda Presentes
+        </label>
+        <label>
+          <input (change)="onSelectStatus('OUT')" type="radio" name="status">
+          Pessoas Que Já Deixaram o Hotel
+        </label>
+      </div>
+      <input type="text" [(ngModel)]="content" (keydown.enter)="onContentChange()" (change)="onContentChange()" placeholder="Conteúdo"/>
+    </nav>
+    <div>
+      <table>
+        <tr>
+          <th>Nome</th>
+          <th>Documento</th>
+          <th>Total Gasto Integro (R$)</th>
+          <th>Total Gasto na Última Hospedagem (R$)</th>
+        </tr>
+        <tr *ngFor="let hospede of hospedes">
+          <td>{{ hospede.nome }}</td>
+          <td>{{ hospede.documento }}</td>
+          <td>{{ hospede.totalGastoIntegro }}</td>
+          <td>{{ hospede.totalGastoDaUltimaHospedagem }}</td>
+        </tr>
+      </table>
+      <footer>
+        <button [disabled]="paginaAtual === 0" (click)="previousPage()">Anterior</button>
+        <button [disabled]="ehUltimaPagina" (click)="nextPage()">Próximo</button>
+      </footer>
+    </div>
   </section>
 </main>

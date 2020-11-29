@@ -31,8 +31,8 @@ export class HospedeService {
     return [data, status];
   }
 
-  async index() {
-    const { data, status } = await api.get('/v1/hospedes');
+  async index(numeroDaPagina, totalDeElementosPorPagina, statusHospede, content) {
+    const { data, status } = await api.get(`/v1/check-ins/hospedes?page=${numeroDaPagina}&size=${totalDeElementosPorPagina}&status=${statusHospede}&content=${content.trim()}`);
 
     return [data, status];
   }

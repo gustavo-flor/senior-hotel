@@ -1,6 +1,5 @@
 @import './_variables'
 
-
 #landing-container
   width: 100%
   max-width: 1024px
@@ -16,86 +15,3 @@
     color: #fff
     cursor: pointer
     outline: none
-  & > .group-section
-    width: 100%
-    border-radius: 8px
-    overflow: hidden
-    margin-top: 32px
-    border: 2px solid $secondaryColor
-    & > h3
-      margin: 0
-      font-size: 20px
-      font-weight: normal
-      color: #fff
-      background: $secondaryColor
-      padding: 12px 24px
-    & > form
-      display: flex
-      flex-wrap: wrap
-      align-items: center
-      padding: 0 0 24px 24px
-      & > div[data-expanded]
-        width: 100%
-      & > div
-        display: flex
-        width: 50%
-        min-width: 50%
-        margin-top: 24px
-        padding-right: 24px
-        & > label
-          display: flex
-          justify-content: space-between
-          align-items: center
-          & > small
-            color: #777
-        & > input
-          display: block
-        & > input
-          padding: 8px
-          border: 2px solid #ccc
-          border-radius: 8px
-          outline: none
-          cursor: pointer
-          &:focus
-            border-color: $secondaryColor
-      & > div[data-direction="column"]
-        flex-direction: column
-        & > label
-          margin-bottom: 8px
-      & > div[data-direction="row"]
-        flex-direction: row
-        margin-top: 48px
-        & > label
-          margin-left: 8px
-      & > button[type="submit"]
-        align-self: start
-        display: block
-        background: $secondaryColor
-        border: none
-        padding: 12px 24px
-        border-radius: 8px
-        color: #fff
-        cursor: pointer
-        outline: none
-        margin-top: 24px
-        &[disabled]
-          opacity: .75
-          cursor: default
-
-
-@media (max-width: $breakpoint-tablet) 
-  #landing-container > .group-section > form
-    flex-direction: column
-    flex-wrap: nowrap
-    & > div
-      width: 100%
-    & > div[data-direction="row"]
-      margin-top: 32px
-
-
-@media (max-width: $breakpoint-mobile)
-  #landing-container > .group-section > form > div > label
-    flex-direction: column
-    align-items: flex-start
-    & > small
-      margin-top: 4px
