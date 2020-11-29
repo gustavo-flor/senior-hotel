@@ -34,8 +34,8 @@ Seja muito bem-vindo ao resultado do meu desafio Senior Hotel - Desenvolvedor Fu
 
 É importante notar que a aplicação web é dependente do serviço de api rest, portanto para que as aplicações sejam integradas corretamente vamos seguir a ordem de api > web.
 
-1. Acesse a pasta `api` e execute o comando `java -jar target/*.jar` para buildar o serviço;
-2. Acesse a pasta `web` e execute o comando `npm run build` para buildar a aplicação.
+1. Acesse a pasta `api` e execute o comando `java -jar target/*.jar` para buildar o serviço (Servido na porta `:3000`);
+2. Acesse a pasta `web` e execute o comando `npm run build` para buildar a aplicação (Servido na porta `:4200`).
 
 ## Documentação API
 
