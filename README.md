@@ -41,54 +41,6 @@ Seja muito bem-vindo ao resultado do meu desafio Senior Hotel - Desenvolvedor Fu
 
 Ao fazer deploy da API, o próprio serviço disponibilizará uma documentação viva através do swagger, para acessar basta entrar em `http://localhost:3000/swagger-ui.html`, porém, para verificar mais detalhes e regras de negócio segue a documentação feita por mim:
 
-### CheckIn Controller
-
----
-
-Endpoint: `POST /v1/check-ins/`
-
-Body:
-
-```txt
-{
-  "adicionalVeiculo": true | false, // [Obrigatório]
-  "dataEntrada": "string", // (Formato: "yyyy-MM-dd'T'HH:mm:ss") [Obrigatório]
-  "dataSaida": "string", // (Formato: "yyyy-MM-dd'T'HH:mm:ss") [Obrigatório]
-  "documentoHospede": "string" [Obrigatório]
-}
-```
-
-Responses:
-
-- 201: Registro inserido com sucesso!;
-- 409: Conflito com regra de negócio:
-  - Não existe nenhum hóspede com o documento informado;
-  - Data de Entrada está no futuro;
-  - Data de Entrada é maior que a de Saida;
-
----
-
-Endpoint: `GET /v1/check-ins/hospedes`
-
-Parameters:
-
-```txt
-- content: Não Obrigatório e representa o filtro que será utilizado nos campos "Nome", "Documento" e "Telefone" do Hóspede;
-- status: Pode receber ["IN", "OUT"] e não é obrigatório, sendo considerado "IN" caso nulo, representa o status do Hóspede de acordo com o Check In (é importante notar que Hóspedes sem Check In não são listados):
-  - IN: Tem Check In na data atual;
-  - OUT: Tem Check In fora da data atual;
-- page: Parâmetro para gerenciamento da paginação, não obrigatório;
-- size: Parâmetro para gerenciamento da paginação, não obrigatório;
-```
-
-Responses:
-
-- 200: Busca realizada e retornado elementos páginados;
-- 409: Conflito com regra de negócio:
-  - Status informado não identificado;
-
----
-
 ### Hospede Controller
 
 ---
@@ -183,6 +135,54 @@ Responses:
 - 409: Conflito com regra de negócio:
   - Documento informado já está cadastro por outro hóspede;
 - 404: Registro não encontrado.
+
+---
+
+### CheckIn Controller
+
+---
+
+Endpoint: `POST /v1/check-ins/`
+
+Body:
+
+```txt
+{
+  "adicionalVeiculo": true | false, // [Obrigatório]
+  "dataEntrada": "string", // (Formato: "yyyy-MM-dd'T'HH:mm:ss") [Obrigatório]
+  "dataSaida": "string", // (Formato: "yyyy-MM-dd'T'HH:mm:ss") [Obrigatório]
+  "documentoHospede": "string" [Obrigatório]
+}
+```
+
+Responses:
+
+- 201: Registro inserido com sucesso!;
+- 409: Conflito com regra de negócio:
+  - Não existe nenhum hóspede com o documento informado;
+  - Data de Entrada está no futuro;
+  - Data de Entrada é maior que a de Saida;
+
+---
+
+Endpoint: `GET /v1/check-ins/hospedes`
+
+Parameters:
+
+```txt
+- content: Não Obrigatório e representa o filtro que será utilizado nos campos "Nome", "Documento" e "Telefone" do Hóspede;
+- status: Pode receber ["IN", "OUT"] e não é obrigatório, sendo considerado "IN" caso nulo, representa o status do Hóspede de acordo com o Check In (é importante notar que Hóspedes sem Check In não são listados):
+  - IN: Tem Check In na data atual;
+  - OUT: Tem Check In fora da data atual;
+- page: Parâmetro para gerenciamento da paginação, não obrigatório;
+- size: Parâmetro para gerenciamento da paginação, não obrigatório;
+```
+
+Responses:
+
+- 200: Busca realizada e retornado elementos páginados;
+- 409: Conflito com regra de negócio:
+  - Status informado não identificado;
 
 ---
 
