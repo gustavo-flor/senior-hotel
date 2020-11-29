@@ -136,8 +136,6 @@ Responses:
   - Documento informado já está cadastro por outro hóspede;
 - 404: Registro não encontrado.
 
----
-
 ### CheckIn Controller
 
 ---
