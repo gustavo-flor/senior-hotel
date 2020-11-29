@@ -4,8 +4,6 @@ Seja muito bem-vindo ao resultado do meu desafio Senior Hotel - Desenvolvedor Fu
 
 ## Instalação
 
-É importante notar que as aplicações front e back end estão disponíveis no Heroku para testes, porém caso queira brincar no seu ambiente local siga os passos a seguir:
-
 ### API
 
 #### Ambiente
