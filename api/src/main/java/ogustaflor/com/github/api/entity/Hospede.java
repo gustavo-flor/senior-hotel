@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Entity
 public class Hospede {
@@ -36,5 +37,13 @@ public class Hospede {
 	@Getter
 	@Setter
 	private String telefone;
+	
+	@Getter
+	@Setter
+	private BigDecimal totalGastoIntegro = BigDecimal.ZERO;
+	
+	@Getter
+	@Setter
+	private BigDecimal totalGastoDaUltimaHospedagem = BigDecimal.ZERO;
 	
 }

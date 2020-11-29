@@ -10,14 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/hospedes")
 @RequiredArgsConstructor
-public class HospedeController {
+public class HospedeController extends GenericController {
 	
 	private final HospedeService hospedeService;
 	
@@ -26,21 +24,19 @@ public class HospedeController {
 		@RequestParam(name = "page", defaultValue = "0", required = false) int page,
 		@RequestParam(name = "size", defaultValue = "8", required = false) int size
 	) {
-		Page<Hospede> hospedes = hospedeService.findAll(page, size);
+		Page<Hospede> hospedes = hospedeService.paginate(page, size);
 		return new ResponseEntity<>(hospedes, HttpStatus.OK);
 	}
 	
 	@PostMapping(produces = "application/json", consumes = "application/json")
 	public ResponseEntity<?> store(@Valid @RequestBody HospedeRequestBody newHospede) {
 		if (hospedeService.existsWithDocumento(newHospede.getDocumento())) {
-			Map<String, Object> body = new HashMap<>();
-			body.put("message", "Documento já cadastrado.");
-			return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+			return new ResponseEntity<>(criaObjetoComMensagem("Documento já cadastrado."), HttpStatus.CONFLICT);
 		}
 		
 		Hospede hospede = newHospede.toEntity();
 		hospedeService.add(hospede);
-		return new ResponseEntity<>(hospede, HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@GetMapping(value = "/{id}", produces = "application/json")
@@ -68,9 +64,7 @@ public class HospedeController {
 			}
 			if (updatedHospede.getDocumento() != null && !hospede.getDocumento().equals(updatedHospede.getDocumento())) {
 				if (hospedeService.existsWithDocumento(hospede.getDocumento())) {
-					Map<String, Object> body = new HashMap<>();
-					body.put("message", "Documento já cadastrado.");
-					return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+					return new ResponseEntity<>(criaObjetoComMensagem("Documento já cadastrado."), HttpStatus.CONFLICT);
 				}
 				
 				hospede.setDocumento(updatedHospede.getDocumento());
@@ -85,7 +79,7 @@ public class HospedeController {
 				hospedeService.update(hospede);
 			}
 			
-			return new ResponseEntity<>(hospede, HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -95,4 +89,5 @@ public class HospedeController {
 	public void destroy(@PathVariable(value = "id") long id) {
 		hospedeService.findById(id).ifPresent(hospedeService::destroy);
 	}
+	
 }

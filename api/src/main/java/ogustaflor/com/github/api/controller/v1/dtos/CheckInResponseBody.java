@@ -30,7 +30,7 @@ public class CheckInResponseBody {
 		checkInResponseBody.setDataEntrada(DateUtils.toString(checkIn.getDataEntrada()));
 		checkInResponseBody.setDataSaida(DateUtils.toString(checkIn.getDataSaida()));
 		checkInResponseBody.setHospede(checkIn.getHospede());
-		checkInResponseBody.setAdicionalVeiculo(checkIn.getAdicionalVeiculo());
+		checkInResponseBody.setAdicionalVeiculo(checkIn.isAdicionalVeiculo());
 		return checkInResponseBody;
 	}
 	
