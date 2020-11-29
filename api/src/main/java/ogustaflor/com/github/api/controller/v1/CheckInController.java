@@ -7,6 +7,8 @@ import ogustaflor.com.github.api.entity.CheckIn;
 import ogustaflor.com.github.api.entity.Hospede;
 import ogustaflor.com.github.api.service.CheckInService;
 import ogustaflor.com.github.api.service.HospedeService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,12 +49,14 @@ public class CheckInController extends GenericController {
 	
 	@GetMapping(value = "/hospedes", produces = "application/json")
 	public ResponseEntity<?> find(
+		@RequestParam(name = "page", defaultValue = "0", required = false) int page,
+		@RequestParam(name = "size", defaultValue = "8", required = false) int size,
 		@RequestParam(name = "status", defaultValue = "IN") String status,
 		@RequestParam(name = "content", defaultValue = "") String content
 	) {
 		List<String> allowedsStatus = Arrays.asList("IN", "OUT");
 		if (allowedsStatus.stream().anyMatch(allowedStatus -> allowedStatus.equals(status.toUpperCase()))) {
-			List<Hospede> hospedes = checkInService.filterHospedes(status, content);
+			Page<Hospede> hospedes = checkInService.filterHospedes(status, content, PageRequest.of(page, size));
 			return new ResponseEntity<>(hospedes, HttpStatus.OK);
 		}
 		

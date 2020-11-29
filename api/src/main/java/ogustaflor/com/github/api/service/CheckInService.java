@@ -5,6 +5,9 @@ import ogustaflor.com.github.api.entity.CheckIn;
 import ogustaflor.com.github.api.entity.Hospede;
 import ogustaflor.com.github.api.repository.CheckInRepository;
 import ogustaflor.com.github.api.utils.DateUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -20,19 +23,22 @@ public class CheckInService {
 	private final CheckInRepository checkInRepository;
 	private final HospedeService hospedeService;
 	
-	public List<Hospede> filterHospedes(String status, String content) {
-		List<Hospede> hospedes = Collections.emptyList();
+	public Page<Hospede> filterHospedes(String status, String content, Pageable pageable) {
+		Page<Hospede> hospedes;
+		
 		switch (status.toUpperCase()) {
 			case "IN":
 				hospedes = content.isEmpty()
-					? checkInRepository.filterIn(Timestamp.valueOf(LocalDateTime.now()))
-					: checkInRepository.filterInWithContent(Timestamp.valueOf(LocalDateTime.now()), content);
+					? checkInRepository.filterIn(Timestamp.valueOf(LocalDateTime.now()), pageable)
+					: checkInRepository.filterInWithContent(Timestamp.valueOf(LocalDateTime.now()), content, pageable);
 				break;
 			case "OUT":
 				hospedes = content.isEmpty()
-					? checkInRepository.filterOut(Timestamp.valueOf(LocalDateTime.now()))
-					: checkInRepository.filterOutWithContent(Timestamp.valueOf(LocalDateTime.now()), content);
+					? checkInRepository.filterOut(Timestamp.valueOf(LocalDateTime.now()), pageable)
+					: checkInRepository.filterOutWithContent(Timestamp.valueOf(LocalDateTime.now()), content, pageable);
 				break;
+			default:
+				return null;
 		}
 		
 		hospedes.forEach(hospedeService::buscaTotaisGastos);

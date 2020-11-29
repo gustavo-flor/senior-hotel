@@ -2,6 +2,8 @@ package ogustaflor.com.github.api.repository;
 
 import ogustaflor.com.github.api.entity.CheckIn;
 import ogustaflor.com.github.api.entity.Hospede;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -34,7 +36,7 @@ public interface CheckInRepository extends JpaRepository<CheckIn, Long> {
 		"WHERE ?1 BETWEEN ci.dataEntrada AND ci.dataSaida " +
 		"GROUP BY h.id "
 	)
-	List<Hospede> filterIn(Timestamp dataAtual);
+	Page<Hospede> filterIn(Timestamp dataAtual, Pageable pageable);
 	
 	@Query(
 		"SELECT h " +
@@ -50,7 +52,7 @@ public interface CheckInRepository extends JpaRepository<CheckIn, Long> {
 		") " +
 		"GROUP BY h.id "
 	)
-	List<Hospede> filterInWithContent(Timestamp dataAtual, String content);
+	Page<Hospede> filterInWithContent(Timestamp dataAtual, String content, Pageable pageable);
 	
 	@Query(
 		"SELECT h " +
@@ -63,7 +65,7 @@ public interface CheckInRepository extends JpaRepository<CheckIn, Long> {
 		") " +
 		"GROUP BY h.id "
 	)
-	List<Hospede> filterOut(Timestamp dataAtual);
+	Page<Hospede> filterOut(Timestamp dataAtual, Pageable pageable);
 	
 	@Query(
 		"SELECT h " +
@@ -82,6 +84,6 @@ public interface CheckInRepository extends JpaRepository<CheckIn, Long> {
 		") " +
 		"GROUP BY h.id "
 	)
-	List<Hospede> filterOutWithContent(Timestamp dataAtual, String content);
+	Page<Hospede> filterOutWithContent(Timestamp dataAtual, String content, Pageable pageable);
 	
 }
