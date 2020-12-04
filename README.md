@@ -183,7 +183,3 @@ Responses:
   - Status informado não identificado;
 
 ---
-
-## Muito Obrigado!
-
-Foi bem interessante implementar esse desafio, fazia um booom tempo que não desenvolvia uma aplicação Angular e foi muito legal re-aprender. Novamente, muito obrigado pela oportunidade e aguardo retornos :smiley:!!! Vamos Juntos.
